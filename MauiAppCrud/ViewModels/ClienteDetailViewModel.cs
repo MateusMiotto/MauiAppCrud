@@ -3,9 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using MauiAppCrud.Models;
 
 
-namespace MauiAppCrud.PageModels
+namespace MauiAppCrud.ViewModels
 {
-    public partial class ClienteDetailPageModel : ObservableObject, IQueryAttributable
+    public partial class ClienteDetailViewModel : ObservableObject, IQueryAttributable
     {
         private readonly ClienteRepository _clienteRepository;
         private readonly ModalErrorHandler _errorHandler;
@@ -55,7 +55,7 @@ namespace MauiAppCrud.PageModels
             SaveCommand.NotifyCanExecuteChanged();
         }
 
-        public ClienteDetailPageModel(ClienteRepository clienteRepository, ModalErrorHandler errorHandler)
+        public ClienteDetailViewModel(ClienteRepository clienteRepository, ModalErrorHandler errorHandler)
         {
             _clienteRepository = clienteRepository;
             _errorHandler = errorHandler;

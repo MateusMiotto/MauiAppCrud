@@ -60,26 +60,27 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Converters\" />
 		<Folder Include="Properties\" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Compile Update="Pages\ClienteListPage.xaml.cs">
+		<Compile Update="Views\ClienteListPage.xaml.cs">
 			<DependentUpon>ClienteListPage.xaml</DependentUpon>
 		</Compile>
-		<Compile Update="Pages\ClienteDetailPage.xaml.cs">
+		<Compile Update="Views\ClienteDetailPage.xaml.cs">
 			<DependentUpon>ClienteDetailPage.xaml</DependentUpon>
 		</Compile>
 	</ItemGroup>
 
 	<ItemGroup>
-		<MauiXaml Update="Pages\ClienteListPage.xaml">
+		<MauiXaml Update="Views\ClienteListPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Pages\Controls\AddButton.xaml">
+		<MauiXaml Update="Views\Controls\AddButton.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
-		<MauiXaml Update="Pages\ClienteDetailPage.xaml">
+		<MauiXaml Update="Views\ClienteDetailPage.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>
 		<MauiXaml Update="Resources\Styles\AppStyles.xaml">

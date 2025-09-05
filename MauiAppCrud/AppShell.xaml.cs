@@ -35,7 +35,9 @@ namespace MauiAppCrud
         {
             // Toast is currently not working in MCT on Windows
             if (OperatingSystem.IsWindows())
+            {
                 return;
+            }
 
             var toast = Toast.Make(message, textSize: 18);
 

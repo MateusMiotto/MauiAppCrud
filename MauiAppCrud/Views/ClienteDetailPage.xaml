@@ -3,28 +3,22 @@
     x:Class="MauiAppCrud.Pages.ClienteDetailPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:converters="clr-namespace:MauiAppCrud.Converters"
     xmlns:models="clr-namespace:MauiAppCrud.Models"
-    xmlns:pageModel="clr-namespace:MauiAppCrud.PageModels"
     xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.TextInputLayout;assembly=Syncfusion.Maui.Toolkit"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:MauiAppCrud.ViewModels"
     Title="{Binding Title}"
-    x:DataType="pageModel:ClienteDetailPageModel"
+    x:DataType="vm:ClienteDetailViewModel"
     Shell.FlyoutBehavior="Disabled">
 
-    <ContentPage.Resources>
-        <toolkit:IsStringNotNullOrEmptyConverter x:Key="IsStringNotNullOrEmptyConverter" />
-        <converters:AgeValidationConverter x:Key="AgeValidationConverter" />
-    </ContentPage.Resources>
-
-    <ContentPage.ToolbarItems>
+    <!--<ContentPage.ToolbarItems>
         <ToolbarItem
             Command="{Binding DeleteCommand}"
             IconImageSource="{StaticResource IconDelete}"
             Order="Primary"
             Priority="0"
             Text="Delete" />
-    </ContentPage.ToolbarItems>
+    </ContentPage.ToolbarItems>-->
 
     <Grid>
         <ScrollView>

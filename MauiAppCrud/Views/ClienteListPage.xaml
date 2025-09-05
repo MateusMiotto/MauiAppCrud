@@ -5,10 +5,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:controls="clr-namespace:MauiAppCrud.Pages.Controls"
     xmlns:models="clr-namespace:MauiAppCrud.Models"
-    xmlns:pageModels="clr-namespace:MauiAppCrud.PageModels"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:MauiAppCrud.ViewModels"
     Title="Clientes"
-    x:DataType="pageModels:ClienteListPageModel">
+    x:DataType="vm:ClienteListViewModel">
 
 
     <ContentPage.Behaviors>
@@ -38,7 +38,7 @@
                             <Label Text="{Binding Address}" />
                         </VerticalStackLayout>
                         <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigateToClienteCommand, Source={RelativeSource AncestorType={x:Type pageModels:ClienteListPageModel}}, x:DataType=pageModels:ClienteListPageModel}" CommandParameter="{Binding .}" />
+                            <TapGestureRecognizer Command="{Binding NavigateToClienteCommand, Source={RelativeSource AncestorType={x:Type vm:ClienteListViewModel}}, x:DataType=vm:ClienteListViewModel}" CommandParameter="{Binding .}" />
                         </Border.GestureRecognizers>
                     </Border>
                 </DataTemplate>

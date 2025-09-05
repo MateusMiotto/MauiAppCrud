@@ -12,7 +12,6 @@
                 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
                 <ResourceDictionary Source="Resources/Styles/AppStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <converters:AgeValidationConverter x:Key="AgeValidationConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

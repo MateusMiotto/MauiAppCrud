@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Syncfusion.Maui.Toolkit.Hosting;
+using Windows.UI.Notifications;
 
 namespace MauiAppCrud
 {
@@ -28,8 +29,8 @@ namespace MauiAppCrud
             builder.Services.AddSingleton<ModalErrorHandler>();
 
 
-            builder.Services.AddTransientWithShellRoute<ClienteListPage, ClienteListPageModel>("clientes");
-            builder.Services.AddTransientWithShellRoute<ClienteDetailPage, ClienteDetailPageModel>("cliente");
+            builder.Services.AddTransientWithShellRoute<ClienteListPage, ClienteListViewModel>("clientes");
+            builder.Services.AddTransientWithShellRoute<ClienteDetailPage, ClienteDetailViewModel>("cliente");
 
             return builder.Build();
         }

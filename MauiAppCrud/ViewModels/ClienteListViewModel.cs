@@ -1,18 +1,17 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using MauiAppCrud.Data;
 using MauiAppCrud.Models;
 
-namespace MauiAppCrud.PageModels
+namespace MauiAppCrud.ViewModels
 {
-    public partial class ClienteListPageModel : ObservableObject
+    public partial class ClienteListViewModel : ObservableObject
     {
         private readonly ClienteRepository _clienteRepository;
 
         [ObservableProperty]
         private List<Cliente> _clientes = [];
 
-        public ClienteListPageModel(ClienteRepository projectRepository)
+        public ClienteListViewModel(ClienteRepository projectRepository)
         {
             _clienteRepository = projectRepository;
         }

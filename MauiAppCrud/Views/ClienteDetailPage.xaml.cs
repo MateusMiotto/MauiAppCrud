@@ -1,10 +1,9 @@
-using MauiAppCrud.PageModels;
 
 namespace MauiAppCrud.Pages
 {
     public partial class ClienteDetailPage : ContentPage
     {
-        public ClienteDetailPage(ClienteDetailPageModel model)
+        public ClienteDetailPage(ClienteDetailViewModel model)
         {
             InitializeComponent();
             BindingContext = model;
