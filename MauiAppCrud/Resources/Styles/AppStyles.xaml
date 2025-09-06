@@ -103,6 +103,13 @@
                                 Dark={StaticResource LightOnDarkBackground}}" />
 
     <FontImageSource
+        x:Key="IconSave"
+        FontFamily="{x:Static f:FluentUI.FontFamily}"
+        Glyph="{x:Static f:FluentUI.save_32_regular}"
+        Size="{StaticResource IconSize}"
+        Color="{AppThemeBinding Light={StaticResource DarkOnLightBackground},
+                                Dark={StaticResource LightOnDarkBackground}}" />
+    <FontImageSource
         x:Key="IconClean"
         FontFamily="{x:Static f:FluentUI.FontFamily}"
         Glyph="{x:Static f:FluentUI.broom_32_regular}"

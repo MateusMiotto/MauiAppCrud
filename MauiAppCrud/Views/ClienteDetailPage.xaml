@@ -51,10 +51,12 @@
                     Hint="Endereço">
                     <Entry Text="{Binding Address}" />
                 </sf:SfTextInputLayout>
+
                 <Button
                     Command="{Binding SaveCommand}"
                     HeightRequest="{OnIdiom 44,
                                             Desktop=60}"
+                    ImageSource="{StaticResource IconSave}"
                     IsEnabled="{Binding CanSave}"
                     Text="Salvar" />
 
@@ -63,6 +65,7 @@
                     Command="{Binding DeleteCommand}"
                     HeightRequest="{OnIdiom 44,
                                             Desktop=60}"
+                    ImageSource="{StaticResource IconDelete}"
                     IsVisible="{Binding CanDelete}"
                     Text="Excluir"
                     TextColor="White" />
