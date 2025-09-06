@@ -25,22 +25,43 @@ namespace MauiAppCrud
                     events.AddWindows(w =>
                     {
                         bool firstWindow = true;
+
                         w.OnWindowCreated(window =>
                         {
-                            window.ExtendsContentIntoTitleBar = false; //If you need to completely hide the minimized maximized close button, you need to set this value to false.
-                            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-                            WindowId myWndId = Win32Interop.GetWindowIdFromWindow(hWnd);
+                            window.ExtendsContentIntoTitleBar = false;
 
-                            var appWindow = AppWindow.GetFromWindowId(myWndId);
+                            IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                            WindowId windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+                            AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
+
+                            DisplayArea area = DisplayArea.GetFromWindowId(windowId, DisplayAreaFallback.Primary);
 
                             if (firstWindow)
                             {
-                                appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                                appWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+
+                                // Ocupa toda a área disponível
+                                appWindow.Resize(new Windows.Graphics.SizeInt32(
+                                    area.WorkArea.Width,
+                                    area.WorkArea.Height));
+
+                                // Posiciona a janela no canto superior esquerdo da área de trabalho
+                                appWindow.Move(new Windows.Graphics.PointInt32(
+                                    area.WorkArea.X,
+                                    area.WorkArea.Y));
+
                                 firstWindow = false;
                             }
                             else
                             {
                                 appWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+
+                                // Centraliza as demais janelas
+                                int x = (area.WorkArea.Width - appWindow.Size.Width) / 2;
+                                int y = (area.WorkArea.Height - appWindow.Size.Height) / 2;
+                                appWindow.Move(new Windows.Graphics.PointInt32(
+                                    x + area.WorkArea.X,
+                                    y + area.WorkArea.Y));
                             }
                         });
                     });
