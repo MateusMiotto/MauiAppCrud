@@ -1,14 +1,16 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MauiAppCrud.Models;
+using Microsoft.Maui.Controls;
 
 
 namespace MauiAppCrud.ViewModels
 {
-    public partial class ClienteDetailViewModel : ObservableObject, IQueryAttributable
+    public partial class ClienteDetailViewModel : ObservableObject, IQueryAttributable, INavigationViewModel
     {
         private readonly ClienteRepository _clienteRepository;
         private readonly ModalErrorHandler _errorHandler;
+        public INavigationService Navigation { get; }
 
         private bool _canDelete;
         public const string ClienteQueryKey = "cliente";
@@ -55,10 +57,11 @@ namespace MauiAppCrud.ViewModels
             SaveCommand.NotifyCanExecuteChanged();
         }
 
-        public ClienteDetailViewModel(ClienteRepository clienteRepository, ModalErrorHandler errorHandler)
+        public ClienteDetailViewModel(ClienteRepository clienteRepository, ModalErrorHandler errorHandler, INavigationService navigation)
         {
             _clienteRepository = clienteRepository;
             _errorHandler = errorHandler;
+            Navigation = navigation;
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -148,7 +151,8 @@ namespace MauiAppCrud.ViewModels
 
             await _clienteRepository.SaveItemAsync(_cliente);
 
-            await Shell.Current.GoToAsync("..?refresh=true");
+            //await Shell.Current.GoToAsync("..?refresh=true");
+            await Navigation.NavigateToAsync("..?refresh=true");
             await AppShell.DisplayToastAsync("Cliente salvo");
         }
 
@@ -174,7 +178,9 @@ namespace MauiAppCrud.ViewModels
             if (_cliente.ID > 0)
                 await _clienteRepository.DeleteItemAsync(_cliente);
 
-            await Shell.Current.GoToAsync("..?refresh=true");
+            await Navigation.NavigateToAsync("..?refresh=true");
+            //await Shell.Current.GoToAsync("..?refresh=true");
+
             await AppShell.DisplayToastAsync("Cliente deletado");
         }
     }

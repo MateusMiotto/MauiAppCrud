@@ -24,13 +24,24 @@ namespace MauiAppCrud
 #if WINDOWS
                     events.AddWindows(w =>
                     {
+                        bool firstWindow = true;
                         w.OnWindowCreated(window =>
                         {
-                            window.ExtendsContentIntoTitleBar = true; //If you need to completely hide the minimized maximized close button, you need to set this value to false.
+                            window.ExtendsContentIntoTitleBar = false; //If you need to completely hide the minimized maximized close button, you need to set this value to false.
                             IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
                             WindowId myWndId = Win32Interop.GetWindowIdFromWindow(hWnd);
-                            var _appWindow = AppWindow.GetFromWindowId(myWndId);
-                            _appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+
+                            var appWindow = AppWindow.GetFromWindowId(myWndId);
+
+                            if (firstWindow)
+                            {
+                                appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                                firstWindow = false;
+                            }
+                            else
+                            {
+                                appWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+                            }
                         });
                     });
 #endif
@@ -48,7 +59,7 @@ namespace MauiAppCrud
 
             builder.Services.AddSingleton<ClienteRepository>();
             builder.Services.AddSingleton<ModalErrorHandler>();
-
+            builder.Services.AddSingleton<INavigationService, NavigationService>();
 
             builder.Services.AddTransientWithShellRoute<ClienteListPage, ClienteListViewModel>("clientes");
             builder.Services.AddTransientWithShellRoute<ClienteDetailPage, ClienteDetailViewModel>("cliente");

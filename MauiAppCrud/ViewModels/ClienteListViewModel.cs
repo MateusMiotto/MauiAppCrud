@@ -4,16 +4,18 @@ using MauiAppCrud.Models;
 
 namespace MauiAppCrud.ViewModels
 {
-    public partial class ClienteListViewModel : ObservableObject
+    public partial class ClienteListViewModel : ObservableObject, INavigationViewModel
     {
         private readonly ClienteRepository _clienteRepository;
+        public INavigationService Navigation { get; }
 
         [ObservableProperty]
         private List<Cliente> _clientes = [];
 
-        public ClienteListViewModel(ClienteRepository projectRepository)
+        public ClienteListViewModel(ClienteRepository projectRepository, INavigationService navigation)
         {
             _clienteRepository = projectRepository;
+            Navigation = navigation;
         }
 
         [RelayCommand]
@@ -24,12 +26,15 @@ namespace MauiAppCrud.ViewModels
 
         [RelayCommand]
         Task NavigateToCliente(Cliente cliente)
-            => Shell.Current.GoToAsync($"cliente?id={cliente.ID}");
+            //=> Shell.Current.GoToAsync($"cliente?id={cliente.ID}");
+            => Navigation.NavigateToAsync($"cliente?id={cliente.ID}");
+
 
         [RelayCommand]
         async Task AddCliente()
         {
-            await Shell.Current.GoToAsync($"cliente");
+            await Navigation.NavigateToAsync($"cliente");
+            //await Shell.Current.GoToAsync($"cliente");
         }
     }
 }

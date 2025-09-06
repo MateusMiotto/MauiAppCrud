@@ -6,8 +6,8 @@ namespace MauiAppCrud.Pages
     {
         public ClienteListPage(ClienteListViewModel model)
         {
-            BindingContext = model;
             InitializeComponent();
+            BindingContext = model;
         }
     }
 }
