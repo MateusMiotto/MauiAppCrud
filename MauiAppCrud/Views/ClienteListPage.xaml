@@ -21,26 +21,28 @@
             VerticalOptions="Center" />
 
 
-        <VerticalStackLayout
-            Margin="{StaticResource LayoutPadding}"
-            BindableLayout.ItemsSource="{Binding Clientes}"
-            Spacing="{StaticResource LayoutSpacing}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="models:Cliente">
-                    <Border>
-                        <VerticalStackLayout Padding="10">
-                            <Label FontSize="24" Text="{Binding Name}" />
-                            <Label Text="{Binding LastName}" />
-                            <Label Text="{Binding Age}" />
-                            <Label Text="{Binding Address}" />
-                        </VerticalStackLayout>
-                        <Border.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigateToClienteCommand, Source={RelativeSource AncestorType={x:Type vm:ClienteListViewModel}}, x:DataType=vm:ClienteListViewModel}" CommandParameter="{Binding .}" />
-                        </Border.GestureRecognizers>
-                    </Border>
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </VerticalStackLayout>
+        <ScrollView>
+            <VerticalStackLayout
+                Margin="{StaticResource LayoutPadding}"
+                BindableLayout.ItemsSource="{Binding Clientes}"
+                Spacing="{StaticResource LayoutSpacing}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:Cliente">
+                        <Border>
+                            <VerticalStackLayout Padding="10">
+                                <Label FontSize="24" Text="{Binding Name}" />
+                                <Label Text="{Binding LastName}" />
+                                <Label Text="{Binding Age}" />
+                                <Label Text="{Binding Address}" />
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavigateToClienteCommand, Source={RelativeSource AncestorType={x:Type vm:ClienteListViewModel}}, x:DataType=vm:ClienteListViewModel}" CommandParameter="{Binding .}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
 
         <controls:AddButton Command="{Binding AddClienteCommand}" />
     </Grid>
