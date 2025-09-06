@@ -1,17 +1,14 @@
 
-using Microsoft.Extensions.DependencyInjection;
+using MauiAppCrud.Views.Base;
 
 namespace MauiAppCrud.Pages
 {
-    public partial class ClienteDetailPage : ContentPage
+    public partial class ClienteDetailPage : ContentPage, IMauiView
     {
         public ClienteDetailPage()
         {
             InitializeComponent();
-            //var navigation = App.Current.Services.GetRequiredService<INavigationService>();
-
-            var navigation = Application.Current.Handler.MauiContext.Services.GetService<INavigationService>();
-            navigation.InitializeViewModel(this);
+            this.InjectViewModel();
         }
     }
 }

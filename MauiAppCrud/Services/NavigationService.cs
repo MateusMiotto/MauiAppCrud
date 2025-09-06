@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Maui.Controls;
-using Microsoft.Extensions.DependencyInjection;
 using System.Linq;
+using MauiAppCrud.Views.Base;
 
 namespace MauiAppCrud.Services
 {
@@ -62,17 +62,8 @@ namespace MauiAppCrud.Services
         /// <inheritdoc />
         public void InitializeViewModel(Page page)
         {
-            var vmTypeName = page.GetType().FullName!
-                .Replace(".Pages.", ".ViewModels.")
-                .Replace("Page", "ViewModel");
-            var vmType = Type.GetType(vmTypeName);
-            if (vmType is null)
-                return;
-
-            var vm = ActivatorUtilities.CreateInstance(_serviceProvider, vmType);
-            if (vm is INavigationViewModel navigationViewModel)
-                navigationViewModel.Navigation = this;
-            page.BindingContext = vm;
+            if (page is IMauiView mauiView)
+                mauiView.InjectViewModel(_serviceProvider);
         }
 
         private static IDictionary<string, object> ParseQuery(string route)
