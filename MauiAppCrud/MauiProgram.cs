@@ -51,6 +51,14 @@ namespace MauiAppCrud
                                     area.WorkArea.Y));
 
                                 firstWindow = false;
+
+
+                                //abrir em FULLSCREEN
+                                //window.ExtendsContentIntoTitleBar = true; //If you need to completely hide the minimized maximized close button, you need to set this value to false.
+                                //IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                                //WindowId myWndId = Win32Interop.GetWindowIdFromWindow(hWnd);
+                                //var _appWindow = AppWindow.GetFromWindowId(myWndId);
+                                //_appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
                             }
                             else
                             {
