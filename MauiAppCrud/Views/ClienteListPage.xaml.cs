@@ -7,7 +7,8 @@ namespace MauiAppCrud.Pages
         public ClienteListPage()
         {
             InitializeComponent();
-            var navigation = App.Current.Services.GetRequiredService<INavigationService>();
+            //var navigation = App.Current.Services.GetRequiredService<INavigationService>();
+            var navigation = Application.Current.Handler.MauiContext.Services.GetService<INavigationService>();
             navigation.InitializeViewModel(this);
         }
     }
