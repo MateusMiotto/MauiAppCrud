@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiAppCrud.Pages.ClienteListPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:MauiAppCrud.Pages.Controls"
+    xmlns:models="clr-namespace:MauiAppCrud.Models"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:MauiAppCrud.ViewModels"
+    Title="Clientes"
+    x:DataType="vm:ClienteListViewModel">
+
+
+    <Grid>
+        <Label
+            FontAttributes="Italic"
+            HorizontalOptions="Center"
+            IsVisible="{Binding Clientes, Converter={toolkit:IsListNullOrEmptyConverter}}"
+            Text="Nenhum cliente cadastrado."
+            TextColor="Gray"
+            VerticalOptions="Center" />
+
+
+        <VerticalStackLayout
+            Margin="{StaticResource LayoutPadding}"
+            BindableLayout.ItemsSource="{Binding Clientes}"
+            Spacing="{StaticResource LayoutSpacing}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="models:Cliente">
+                    <Border>
+                        <VerticalStackLayout Padding="10">
+                            <Label FontSize="24" Text="{Binding Name}" />
+                            <Label Text="{Binding LastName}" />
+                            <Label Text="{Binding Age}" />
+                            <Label Text="{Binding Address}" />
+                        </VerticalStackLayout>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToClienteCommand, Source={RelativeSource AncestorType={x:Type vm:ClienteListViewModel}}, x:DataType=vm:ClienteListViewModel}" CommandParameter="{Binding .}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </VerticalStackLayout>
+
+        <controls:AddButton Command="{Binding AddClienteCommand}" />
+    </Grid>
+</ContentPage>

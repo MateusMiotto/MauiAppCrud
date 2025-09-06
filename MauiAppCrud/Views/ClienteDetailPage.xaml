@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MauiAppCrud.Pages.ClienteDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:models="clr-namespace:MauiAppCrud.Models"
+    xmlns:sf="clr-namespace:Syncfusion.Maui.Toolkit.TextInputLayout;assembly=Syncfusion.Maui.Toolkit"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:MauiAppCrud.ViewModels"
+    Title="{Binding Title}"
+    x:DataType="vm:ClienteDetailViewModel"
+    Shell.FlyoutBehavior="Disabled">
+
+    <!--<ContentPage.ToolbarItems>
+        <ToolbarItem
+            Command="{Binding DeleteCommand}"
+            IconImageSource="{StaticResource IconDelete}"
+            Order="Primary"
+            Priority="0"
+            Text="Delete" />
+    </ContentPage.ToolbarItems>-->
+
+    <Grid>
+        <ScrollView>
+            <VerticalStackLayout Padding="{StaticResource LayoutPadding}" Spacing="{StaticResource LayoutSpacing}">
+
+                <sf:SfTextInputLayout
+                    ErrorText="Nome é obrigatório"
+                    HasError="{Binding NameHasError}"
+                    Hint="Nome">
+                    <Entry Text="{Binding Name}" />
+                </sf:SfTextInputLayout>
+
+                <sf:SfTextInputLayout
+                    ErrorText="Sobrenome é obrigatório"
+                    HasError="{Binding LastNameHasError}"
+                    Hint="Sobrenome">
+                    <Entry Text="{Binding LastName}" />
+                </sf:SfTextInputLayout>
+
+                <sf:SfTextInputLayout
+                    ErrorText="Idade obrigatória e deve ser um número inteiro"
+                    HasError="{Binding AgeHasError}"
+                    Hint="Idade">
+                    <Entry Keyboard="Numeric" Text="{Binding Age}" />
+                </sf:SfTextInputLayout>
+
+                <sf:SfTextInputLayout
+                    ErrorText="Endereço é obrigatório"
+                    HasError="{Binding AddressHasError}"
+                    Hint="Endereço">
+                    <Entry Text="{Binding Address}" />
+                </sf:SfTextInputLayout>
+
+                <Button
+                    Command="{Binding SaveCommand}"
+                    HeightRequest="{OnIdiom 44,
+                                            Desktop=60}"
+                    ImageSource="{StaticResource IconSave}"
+                    IsEnabled="{Binding CanSave}"
+                    Text="Salvar" />
+
+                <Button
+                    BackgroundColor="{StaticResource WarningColor}"
+                    Command="{Binding DeleteCommand}"
+                    HeightRequest="{OnIdiom 44,
+                                            Desktop=60}"
+                    ImageSource="{StaticResource IconDelete}"
+                    IsVisible="{Binding CanDelete}"
+                    Text="Excluir"
+                    TextColor="White" />
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+</ContentPage>
