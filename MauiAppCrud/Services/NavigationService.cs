@@ -61,7 +61,9 @@ namespace MauiAppCrud.Services
 
             if (OperatingSystem.IsWindows())
             {
-                Application.Current?.OpenWindow(new Window(page));
+                var window = new Window(page);
+                window.SetBinding(Window.TitleProperty, new Binding(nameof(Page.Title), source: page));
+                Application.Current?.OpenWindow(window);
                 return;
             }
 

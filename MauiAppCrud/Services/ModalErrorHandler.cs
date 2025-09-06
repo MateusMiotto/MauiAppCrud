@@ -21,8 +21,9 @@ namespace MauiAppCrud.Services
             try
             {
                 await _semaphore.WaitAsync();
-                if (Shell.Current is Shell shell)
-                    await shell.DisplayAlert("Error", ex.Message, "OK");
+                var page = Application.Current?.Windows.LastOrDefault()?.Page;
+                if (page is not null)
+                    await page.DisplayAlert("Error", ex.Message, "OK");
             }
             finally
             {

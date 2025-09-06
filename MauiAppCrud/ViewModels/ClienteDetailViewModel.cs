@@ -170,8 +170,14 @@ namespace MauiAppCrud.ViewModels
                     new Exception("Cliente é nulo. Não foi possível deletar."));
                 return;
             }
+            var page = Application.Current?.Windows.LastOrDefault()?.Page;
+            if (page is null)
+            {
+                _errorHandler.HandleError(new Exception("Página atual não encontrada."));
+                return;
+            }
 
-            bool confirmDelete = await Shell.Current.DisplayAlert(
+            bool confirmDelete = await page.DisplayAlert(
                 "Confirmação",
                 "Tem certeza que deseja excluir este cliente?",
                 "Sim",

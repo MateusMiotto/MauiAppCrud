@@ -4,7 +4,7 @@ using MauiAppCrud.Models;
 
 namespace MauiAppCrud.ViewModels
 {
-    public partial class ClienteListViewModel : ObservableObject, INavigationViewModel
+    public partial class ClienteListViewModel : ObservableObject, INavigationViewModel, IQueryAttributable
     {
         private readonly ClienteRepository _clienteRepository;
         public INavigationService Navigation { get; set; }
@@ -22,9 +22,16 @@ namespace MauiAppCrud.ViewModels
             Clientes = await _clienteRepository.ListAsync();
         }
 
+        public void ApplyQueryAttributes(IDictionary<string, object> query)
+        {
+            if (query.ContainsKey("refresh"))
+            {
+                InitializeAsync(null);
+            }
+        }
+
         [RelayCommand]
         Task NavigateToCliente(Cliente cliente)
-            //=> Shell.Current.GoToAsync($"cliente?id={cliente.ID}");
             => Navigation.NavigateToAsync($"cliente?id={cliente.ID}");
 
 
@@ -32,7 +39,6 @@ namespace MauiAppCrud.ViewModels
         async Task AddCliente()
         {
             await Navigation.NavigateToAsync($"cliente");
-            //await Shell.Current.GoToAsync($"cliente");
         }
     }
 }
