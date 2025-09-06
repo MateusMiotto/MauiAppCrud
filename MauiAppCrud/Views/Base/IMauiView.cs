@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Controls;
 using MauiAppCrud.Services;
 using MauiAppCrud.ViewModels.Base;
+using MauiAppCrud.Utilities;
 
 namespace MauiAppCrud.Views.Base
 {
@@ -52,6 +53,9 @@ namespace MauiAppCrud.Views.Base
                 return;
 
             view.InjectViewModel(services);
+
+            if (view is Page page && page.BindingContext is INavigationViewModel navigationViewModel)
+                navigationViewModel.InitializeAsync(null).FireAndForgetSafeAsync();
         }
     }
 }

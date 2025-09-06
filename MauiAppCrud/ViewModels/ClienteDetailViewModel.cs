@@ -27,6 +27,7 @@ namespace MauiAppCrud.ViewModels
         [ObservableProperty] private string _age;
 
         private Cliente? _cliente;
+        private IDictionary<string, object> _queryParameters = new Dictionary<string, object>();
 
         public bool NameHasError => string.IsNullOrWhiteSpace(Name);
         public bool LastNameHasError => string.IsNullOrWhiteSpace(LastName);
@@ -65,7 +66,12 @@ namespace MauiAppCrud.ViewModels
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
-            LoadClienteAsync(query).FireAndForgetSafeAsync(_errorHandler);
+            _queryParameters = query;
+        }
+
+        public async Task InitializeAsync(IDictionary<string, object>? parameters)
+        {
+            await LoadClienteAsync(parameters ?? _queryParameters);
         }
 
         private async Task LoadClienteAsync(IDictionary<string, object> query)

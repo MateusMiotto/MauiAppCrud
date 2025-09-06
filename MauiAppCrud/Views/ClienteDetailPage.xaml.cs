@@ -8,7 +8,6 @@ namespace MauiAppCrud.Pages
         public ClienteDetailPage()
         {
             InitializeComponent();
-            this.InjectViewModel();
         }
     }
 }

@@ -17,8 +17,7 @@ namespace MauiAppCrud.ViewModels
             _clienteRepository = projectRepository;
         }
 
-        [RelayCommand]
-        private async Task Appearing()
+        public async Task InitializeAsync(IDictionary<string, object>? parameters)
         {
             Clientes = await _clienteRepository.ListAsync();
         }
