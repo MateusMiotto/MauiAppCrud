@@ -1,2 +1,2 @@
 # MauiAppCrud
-<img width="2554" height="1398" alt="Screenshot_2" src="https://github.com/user-attachments/assets/42a9e93b-97cd-482d-8def-b2f00c4cfc96" />
+<img width="2559" height="1402" alt="Screenshot" src="https://github.com/user-attachments/assets/fa787715-9648-4d09-9a28-44ba473ba914" />
