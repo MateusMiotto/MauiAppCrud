@@ -24,7 +24,7 @@ namespace MauiAppCrud.Services
         }
 
         /// <inheritdoc />
-        public Task NavigateToAsync(string route)
+        public async Task NavigateToAsync(string route)
         {
             if (route.StartsWith(".."))
             {
@@ -34,34 +34,46 @@ namespace MauiAppCrud.Services
                     if (window != null && Application.Current?.Windows.Count > 1)
                         Application.Current?.CloseWindow(window);
                 }
-                return Shell.Current.GoToAsync(route);
+                await Shell.Current.GoToAsync(route);
+                return;
             }
 
             var baseRoute = route.Split('?')[0];
             if (!_routes.TryGetValue(baseRoute, out var pageType))
-                return Shell.Current.GoToAsync(route);
+            {
+                await Shell.Current.GoToAsync(route);
+                return;
+            }
 
             var page = Activator.CreateInstance(pageType) as Page;
             if (page is null)
-                return Task.CompletedTask;
+                return;
 
             InitializeViewModel(page);
 
-            if (page.BindingContext is IQueryAttributable queryable && route.Contains('?'))
-                queryable.ApplyQueryAttributes(ParseQuery(route));
+            var query = route.Contains('?') ? ParseQuery(route) : new Dictionary<string, object>();
+
+            if (page.BindingContext is IQueryAttributable queryable)
+                queryable.ApplyQueryAttributes(query);
+
+            if (page.BindingContext is INavigationViewModel navigationViewModel)
+                await navigationViewModel.InitializeAsync(query);
 
             if (OperatingSystem.IsWindows())
             {
                 Application.Current?.OpenWindow(new Window(page));
-                return Task.CompletedTask;
+                return;
             }
 
-            return Shell.Current.Navigation.PushAsync(page);
+            await Shell.Current.Navigation.PushAsync(page);
         }
 
         /// <inheritdoc />
         public void InitializeViewModel(Page page)
         {
+            if (page.BindingContext is not null)
+                return;
+
             if (page is IMauiView mauiView)
                 mauiView.InjectViewModel(_serviceProvider);
         }

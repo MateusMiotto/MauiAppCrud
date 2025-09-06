@@ -11,9 +11,6 @@
     x:DataType="vm:ClienteListViewModel">
 
 
-    <ContentPage.Behaviors>
-        <toolkit:EventToCommandBehavior Command="{Binding AppearingCommand}" EventName="Appearing" />
-    </ContentPage.Behaviors>
     <Grid>
         <Label
             FontAttributes="Italic"

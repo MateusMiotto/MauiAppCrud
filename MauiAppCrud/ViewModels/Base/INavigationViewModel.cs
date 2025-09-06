@@ -9,5 +9,11 @@ namespace MauiAppCrud.ViewModels.Base
         /// Navigation service.
         /// </summary>
         INavigationService Navigation { get; set; }
+
+        /// <summary>
+        /// Asynchronously initializes the view model when navigation occurs.
+        /// </summary>
+        /// <param name="parameters">Query parameters passed during navigation.</param>
+        Task InitializeAsync(IDictionary<string, object>? parameters);
     }
 }
