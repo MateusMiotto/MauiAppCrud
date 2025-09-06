@@ -38,27 +38,14 @@ namespace MauiAppCrud
 
                             if (firstWindow)
                             {
-                                appWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
-
-                                // Ocupa toda a área disponível
-                                appWindow.Resize(new Windows.Graphics.SizeInt32(
-                                    area.WorkArea.Width,
-                                    area.WorkArea.Height));
-
-                                // Posiciona a janela no canto superior esquerdo da área de trabalho
-                                appWindow.Move(new Windows.Graphics.PointInt32(
-                                    area.WorkArea.X,
-                                    area.WorkArea.Y));
-
                                 firstWindow = false;
-
-
-                                //abrir em FULLSCREEN
-                                //window.ExtendsContentIntoTitleBar = true; //If you need to completely hide the minimized maximized close button, you need to set this value to false.
-                                //IntPtr hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
-                                //WindowId myWndId = Win32Interop.GetWindowIdFromWindow(hWnd);
-                                //var _appWindow = AppWindow.GetFromWindowId(myWndId);
-                                //_appWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                                switch (appWindow.Presenter)
+                                {
+                                    case Microsoft.UI.Windowing.OverlappedPresenter overlappedPresenter:
+                                        overlappedPresenter.SetBorderAndTitleBar(true, true); //to set first windown FULLSCRENN with no title border and windows buttons set this to false
+                                        overlappedPresenter.Maximize();
+                                        break;
+                                }
                             }
                             else
                             {

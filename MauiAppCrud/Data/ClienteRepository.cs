@@ -11,14 +11,17 @@ namespace MauiAppCrud.Data
     {
         private bool _hasBeenInitialized = false;
         private readonly ILogger _logger;
+        private readonly string _connectionString;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ClienteRepository"/> class.
         /// </summary>
         /// <param name="logger">The logger instance.</param>
-        public ClienteRepository(ILogger<ClienteRepository> logger)
+        public ClienteRepository(ILogger<ClienteRepository> logger, string? connectionString = null)
         {
             _logger = logger;
+            _connectionString = connectionString ?? Constants.DatabasePath;
+
         }
 
         /// <summary>
@@ -29,7 +32,7 @@ namespace MauiAppCrud.Data
             if (_hasBeenInitialized)
                 return;
 
-            await using var connection = new SqliteConnection(Constants.DatabasePath);
+            await using var connection = new SqliteConnection(_connectionString);
             await connection.OpenAsync();
 
             try
@@ -61,7 +64,7 @@ namespace MauiAppCrud.Data
         public async Task<List<Cliente>> ListAsync()
         {
             await Init();
-            await using var connection = new SqliteConnection(Constants.DatabasePath);
+            await using var connection = new SqliteConnection(_connectionString);
             await connection.OpenAsync();
 
             var selectCmd = connection.CreateCommand();
@@ -92,7 +95,7 @@ namespace MauiAppCrud.Data
         public async Task<Cliente?> GetAsync(int id)
         {
             await Init();
-            await using var connection = new SqliteConnection(Constants.DatabasePath);
+            await using var connection = new SqliteConnection(_connectionString);
             await connection.OpenAsync();
 
             var selectCmd = connection.CreateCommand();
@@ -123,7 +126,7 @@ namespace MauiAppCrud.Data
         public async Task<int> SaveItemAsync(Cliente item)
         {
             await Init();
-            await using var connection = new SqliteConnection(Constants.DatabasePath);
+            await using var connection = new SqliteConnection(_connectionString);
             await connection.OpenAsync();
 
             var saveCmd = connection.CreateCommand();
@@ -164,7 +167,7 @@ namespace MauiAppCrud.Data
         public async Task<int> DeleteItemAsync(Cliente item)
         {
             await Init();
-            await using var connection = new SqliteConnection(Constants.DatabasePath);
+            await using var connection = new SqliteConnection(_connectionString);
             await connection.OpenAsync();
 
             var deleteCmd = connection.CreateCommand();
@@ -180,7 +183,7 @@ namespace MauiAppCrud.Data
         public async Task DropTableAsync()
         {
             await Init();
-            await using var connection = new SqliteConnection(Constants.DatabasePath);
+            await using var connection = new SqliteConnection(_connectionString);
             await connection.OpenAsync();
 
             var dropTableCmd = connection.CreateCommand();

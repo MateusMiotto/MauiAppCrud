@@ -9,19 +9,19 @@ namespace MauiAppCrud.Tests.Repositories;
 
 public class ClienteRepositoryTests
 {
-    public ClienteRepositoryTests()
-    {
-        var tempDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-        Directory.CreateDirectory(tempDir);
+    //public ClienteRepositoryTests()
+    //{
 
-        var fileSystem = new TestFileSystem(tempDir);
-        FileSystem.Current = fileSystem;
-    }
+    //}
 
     [Fact]
     public async Task SaveAndRetrieveCliente()
     {
-        var repo = new ClienteRepository(NullLogger<ClienteRepository>.Instance);
+        var tempDbPath = Path.Combine(Path.GetTempPath(), $"{Guid.NewGuid()}.db");
+        var repo = new ClienteRepository(
+            NullLogger<ClienteRepository>.Instance,
+            $"Data Source={tempDbPath}");
+
         await repo.DropTableAsync();
 
         var cliente = new Cliente
@@ -38,13 +38,12 @@ public class ClienteRepositoryTests
         var list = await repo.ListAsync();
         Assert.Single(list);
         Assert.Equal("John", list[0].Name);
+
+        if (File.Exists(tempDbPath))
+        {
+            File.Delete(tempDbPath);
+        }
     }
 
-    private class TestFileSystem : IFileSystem
-    {
-        private readonly string _dir;
-        public TestFileSystem(string dir) => _dir = dir;
-        public string CacheDirectory => _dir;
-        public string AppDataDirectory => _dir;
-    }
+
 }
