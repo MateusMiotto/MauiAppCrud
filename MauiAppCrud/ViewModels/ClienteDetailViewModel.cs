@@ -10,7 +10,7 @@ namespace MauiAppCrud.ViewModels
     {
         private readonly ClienteRepository _clienteRepository;
         private readonly ModalErrorHandler _errorHandler;
-        public INavigationService Navigation { get; }
+        public INavigationService Navigation { get; set; }
 
         private bool _canDelete;
         public const string ClienteQueryKey = "cliente";
@@ -57,11 +57,10 @@ namespace MauiAppCrud.ViewModels
             SaveCommand.NotifyCanExecuteChanged();
         }
 
-        public ClienteDetailViewModel(ClienteRepository clienteRepository, ModalErrorHandler errorHandler, INavigationService navigation)
+        public ClienteDetailViewModel(ClienteRepository clienteRepository, ModalErrorHandler errorHandler)
         {
             _clienteRepository = clienteRepository;
             _errorHandler = errorHandler;
-            Navigation = navigation;
         }
 
         public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -77,7 +76,7 @@ namespace MauiAppCrud.ViewModels
 
                 if (_cliente is null)
                 {
-                    _errorHandler.HandleError(new Exception($"Cliente Id {id} n„o È v·lido."));
+                    _errorHandler.HandleError(new Exception($"Cliente Id {id} n√£o √© v√°lido."));
                     return;
                 }
 
@@ -115,32 +114,32 @@ namespace MauiAppCrud.ViewModels
         {
             if (string.IsNullOrWhiteSpace(Name))
             {
-                _errorHandler.HandleError(new Exception("O campo Nome n„o pode ser vazio."));
+                _errorHandler.HandleError(new Exception("O campo Nome n√£o pode ser vazio."));
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(LastName))
             {
-                _errorHandler.HandleError(new Exception("O campo Sobrenome n„o pode ser vazio."));
+                _errorHandler.HandleError(new Exception("O campo Sobrenome n√£o pode ser vazio."));
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(Age) || !int.TryParse(Age, out var age) || age <= 0)
             {
-                _errorHandler.HandleError(new Exception("A idade deve ser um n˙mero inteiro maior que zero."));
+                _errorHandler.HandleError(new Exception("A idade deve ser um n√∫mero inteiro maior que zero."));
                 return;
             }
             _cliente.Age = age;
 
             if (string.IsNullOrWhiteSpace(Address))
             {
-                _errorHandler.HandleError(new Exception("O campo EndereÁo n„o pode ser vazio."));
+                _errorHandler.HandleError(new Exception("O campo Endere√ßo n√£o pode ser vazio."));
                 return;
             }
 
             if (_cliente is null)
             {
-                _errorHandler.HandleError(new Exception("Cliente È nulo. N„o foi possÌvel salvar."));
+                _errorHandler.HandleError(new Exception("Cliente √© nulo. N√£o foi poss√≠vel salvar."));
                 return;
             }
 
@@ -162,15 +161,15 @@ namespace MauiAppCrud.ViewModels
             if (_cliente is null)
             {
                 _errorHandler.HandleError(
-                    new Exception("Cliente È nulo. N„o foi possÌvel deletar."));
+                    new Exception("Cliente √© nulo. N√£o foi poss√≠vel deletar."));
                 return;
             }
 
             bool confirmDelete = await Shell.Current.DisplayAlert(
-                "ConfirmaÁ„o",
+                "Confirma√ß√£o",
                 "Tem certeza que deseja excluir este cliente?",
                 "Sim",
-                "N„o");
+                "N√£o");
 
             if (!confirmDelete)
                 return;

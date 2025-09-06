@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using Microsoft.Maui.Controls;
+using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
+
 namespace MauiAppCrud.Services
 {
     /// <summary>
@@ -5,26 +11,81 @@ namespace MauiAppCrud.Services
     /// </summary>
     public class NavigationService : INavigationService
     {
+        private readonly IServiceProvider _serviceProvider;
+        private readonly IDictionary<string, Type> _routes = new Dictionary<string, Type>
+        {
+            ["clientes"] = typeof(ClienteListPage),
+            ["cliente"] = typeof(ClienteDetailPage)
+        };
+
+        public NavigationService(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
         /// <inheritdoc />
         public Task NavigateToAsync(string route)
         {
-            if (OperatingSystem.IsWindows())
+            if (route.StartsWith(".."))
             {
-                if (route.StartsWith(".."))
+                if (OperatingSystem.IsWindows())
                 {
                     var window = Application.Current?.Windows.LastOrDefault();
                     if (window != null && Application.Current?.Windows.Count > 1)
                         Application.Current?.CloseWindow(window);
-                    return Shell.Current.GoToAsync(route);
                 }
+                return Shell.Current.GoToAsync(route);
+            }
 
-                var page = Routing.GetOrCreateContent(route) as Page;
-                if (page is not null)
-                    Application.Current?.OpenWindow(new Window(page));
+            var baseRoute = route.Split('?')[0];
+            if (!_routes.TryGetValue(baseRoute, out var pageType))
+                return Shell.Current.GoToAsync(route);
+
+            var page = Activator.CreateInstance(pageType) as Page;
+            if (page is null)
+                return Task.CompletedTask;
+
+            InitializeViewModel(page);
+
+            if (page.BindingContext is IQueryAttributable queryable && route.Contains('?'))
+                queryable.ApplyQueryAttributes(ParseQuery(route));
+
+            if (OperatingSystem.IsWindows())
+            {
+                Application.Current?.OpenWindow(new Window(page));
                 return Task.CompletedTask;
             }
 
-            return Shell.Current.GoToAsync(route);
+            return Shell.Current.Navigation.PushAsync(page);
+        }
+
+        /// <inheritdoc />
+        public void InitializeViewModel(Page page)
+        {
+            var vmTypeName = page.GetType().FullName!
+                .Replace(".Pages.", ".ViewModels.")
+                .Replace("Page", "ViewModel");
+            var vmType = Type.GetType(vmTypeName);
+            if (vmType is null)
+                return;
+
+            var vm = ActivatorUtilities.CreateInstance(_serviceProvider, vmType);
+            if (vm is INavigationViewModel navigationViewModel)
+                navigationViewModel.Navigation = this;
+            page.BindingContext = vm;
+        }
+
+        private static IDictionary<string, object> ParseQuery(string route)
+        {
+            var result = new Dictionary<string, object>();
+            var query = route.Split('?', 2).Length > 1 ? route.Split('?', 2)[1] : string.Empty;
+            foreach (var part in query.Split('&', StringSplitOptions.RemoveEmptyEntries))
+            {
+                var kv = part.Split('=', 2);
+                if (kv.Length == 2)
+                    result[kv[0]] = Uri.UnescapeDataString(kv[1]);
+            }
+            return result;
         }
     }
 }

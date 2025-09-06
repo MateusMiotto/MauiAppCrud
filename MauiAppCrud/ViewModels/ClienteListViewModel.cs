@@ -7,15 +7,14 @@ namespace MauiAppCrud.ViewModels
     public partial class ClienteListViewModel : ObservableObject, INavigationViewModel
     {
         private readonly ClienteRepository _clienteRepository;
-        public INavigationService Navigation { get; }
+        public INavigationService Navigation { get; set; }
 
         [ObservableProperty]
         private List<Cliente> _clientes = [];
 
-        public ClienteListViewModel(ClienteRepository projectRepository, INavigationService navigation)
+        public ClienteListViewModel(ClienteRepository projectRepository)
         {
             _clienteRepository = projectRepository;
-            Navigation = navigation;
         }
 
         [RelayCommand]

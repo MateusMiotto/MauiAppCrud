@@ -1,13 +1,14 @@
-using MauiAppCrud.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MauiAppCrud.Pages
 {
     public partial class ClienteListPage : ContentPage
     {
-        public ClienteListPage(ClienteListViewModel model)
+        public ClienteListPage()
         {
             InitializeComponent();
-            BindingContext = model;
+            var navigation = App.Current.Services.GetRequiredService<INavigationService>();
+            navigation.InitializeViewModel(this);
         }
     }
 }
