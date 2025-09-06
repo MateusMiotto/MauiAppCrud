@@ -61,9 +61,6 @@ namespace MauiAppCrud
             builder.Services.AddSingleton<ModalErrorHandler>();
             builder.Services.AddSingleton<INavigationService, NavigationService>();
 
-            builder.Services.AddTransientWithShellRoute<ClienteListPage, ClienteListViewModel>("clientes");
-            builder.Services.AddTransientWithShellRoute<ClienteDetailPage, ClienteDetailViewModel>("cliente");
-
             return builder.Build();
         }
     }

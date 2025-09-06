@@ -1,3 +1,5 @@
+using Microsoft.Maui.Controls;
+
 namespace MauiAppCrud.Services
 {
     /// <summary>
@@ -11,5 +13,11 @@ namespace MauiAppCrud.Services
         /// <param name="route">Route string to navigate to.</param>
         /// <returns>A task representing the navigation.</returns>
         Task NavigateToAsync(string route);
+
+        /// <summary>
+        /// Initialize the view model for a page and inject navigation service.
+        /// </summary>
+        /// <param name="page">Page to initialize.</param>
+        void InitializeViewModel(Page page);
     }
 }

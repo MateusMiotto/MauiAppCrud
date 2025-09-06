@@ -8,6 +8,6 @@ namespace MauiAppCrud.ViewModels.Base
         /// <summary>
         /// Navigation service.
         /// </summary>
-        INavigationService Navigation { get; }
+        INavigationService Navigation { get; set; }
     }
 }
